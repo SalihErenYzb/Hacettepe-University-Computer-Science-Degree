@@ -11,6 +11,7 @@ public:
     ~EncodeMessage();
 
     ImageMatrix encodeMessageToImage(const ImageMatrix &img, const std::string &message, const std::vector<std::pair<int, int>>& positions);
+    int fibonacci(int n) ;
 
 
 private:

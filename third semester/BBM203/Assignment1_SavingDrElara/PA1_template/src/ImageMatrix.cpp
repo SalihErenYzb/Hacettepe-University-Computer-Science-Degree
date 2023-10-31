@@ -191,7 +191,7 @@ void ImageMatrix::print_data() const{
         std::cout << "[";
         for (int j = 0; j < width; j++)
         {
-            std::cout << std::fixed << std::setprecision(2) << data[i][j]  << " ";    
+            std::cout << std::fixed << std::setprecision(0) << data[i][j]  << " ";    
             }
         std::cout << "]" << std::endl;
     }
