@@ -23,6 +23,10 @@ public:
 
     double** get_data() const; // Getter function to access the data in the matrix
     double get_data(int i, int j) const; // Getter function to access the data at the index (i, j)
+    int get_height() const; // Getter function to access the height of the matrix
+    int get_width() const; // Getter function to access the width of the matrix
+    //my extra function
+    void print_data() const;
 
 private:
     // Private member variables to store the image data

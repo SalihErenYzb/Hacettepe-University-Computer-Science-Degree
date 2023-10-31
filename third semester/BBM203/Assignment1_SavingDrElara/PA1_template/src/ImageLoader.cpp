@@ -9,7 +9,7 @@
 // Default constructor
 ImageLoader::ImageLoader(const std::string& filepath) : height(0), width(0), imageData(nullptr) {
     std::ifstream file(filepath);
-
+    
     if (!file.is_open()) {
         std::cerr << "Error opening file: " << filepath << std::endl;
         return;

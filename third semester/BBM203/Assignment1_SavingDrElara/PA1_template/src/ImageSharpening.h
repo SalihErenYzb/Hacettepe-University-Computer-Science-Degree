@@ -12,6 +12,9 @@ class ImageSharpening {
         ImageMatrix sharpen(const ImageMatrix& input_image, double k);  
 
     private:
+        double** blurring_kernel; // 3x3 kernel for blurring
+        int kernel_height;
+        int kernel_width;
         // add your private functions and variables 
 };
 
