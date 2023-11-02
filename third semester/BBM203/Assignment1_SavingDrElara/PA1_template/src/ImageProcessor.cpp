@@ -7,7 +7,7 @@
 #include "DecodeMessage.h"
 #include "EncodeMessage.h"
 #include <iostream>
-
+#include <algorithm>//del this
 ImageProcessor::ImageProcessor() {
 
 }
@@ -18,13 +18,13 @@ ImageProcessor::~ImageProcessor() {
 
 
 std::string ImageProcessor::decodeHiddenMessage(const ImageMatrix &img) {
-    double k = 2.0;//WTF  CHANGE THIS
+    double k = 2;//WTF  CHANGE THIS
     ImageSharpening sharpening;
     ImageMatrix sharpened = sharpening.sharpen(img,k);
     EdgeDetector edge_detector;
     std::vector<std::pair<int, int>> edge_pixels = edge_detector.detectEdges(sharpened);
     DecodeMessage decoder;
-    std::string message = decoder.decodeFromImage(img, edge_pixels);
+    std::string message = decoder.decodeFromImage(sharpened, edge_pixels);
     return message;
 }
 

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iomanip>
 #include <utility> 
-#include <cmath>
+
 #include "ImageMatrix.h"
 #include "Convolution.h"
 #include "DecodeMessage.h"
@@ -11,7 +11,8 @@
 #include "ImageSharpening.h"
 #include "EdgeDetector.h"
 #include "ImageProcessor.h"
-
+#include <algorithm>    
+#include <cmath>
 
 using namespace std;
 
@@ -320,19 +321,19 @@ int main() {
     int total_number = 0;    
 
     // test convolution
-    test_conv(score, total_number);
+    //test_conv(score, total_number);
 
     // test sharpening
-    test_sharpening(score, total_number);
+    //test_sharpening(score, total_number);
 
     // test edge detection
-    test_edge_detection(score, total_number);
+    //test_edge_detection(score, total_number);
 
     // test encode message
-    //test_encode_mssg(score, total_number);
+    test_encode_mssg(score, total_number);
 
     // test decode message
-    test_decode_msg(score, total_number);
+    //test_decode_msg(score, total_number);
 
     // test image processor's encoder   
     //img_processor_encode(score, total_number);

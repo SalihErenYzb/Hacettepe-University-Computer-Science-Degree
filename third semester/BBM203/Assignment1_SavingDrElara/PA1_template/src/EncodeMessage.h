@@ -11,8 +11,8 @@ public:
     ~EncodeMessage();
 
     ImageMatrix encodeMessageToImage(const ImageMatrix &img, const std::string &message, const std::vector<std::pair<int, int>>& positions);
-    int fibonacci(int n) ;
-
+    int fibonacci(int n) ;// change to fibonacci
+    bool isPrime(int number) ;
 
 private:
     // Any private helper functions or variables if necessary

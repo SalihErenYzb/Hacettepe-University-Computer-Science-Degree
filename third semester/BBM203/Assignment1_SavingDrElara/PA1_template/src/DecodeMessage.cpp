@@ -19,17 +19,16 @@ std::string DecodeMessage::decodeFromImage(const ImageMatrix& image, const std::
     //sort edge pixels by row and column
     std::vector<std::pair<int,int>> edgePixels2 = edgePixels ;
 
-    std::sort(edgePixels2.begin(), edgePixels2.end() );
     int tmp ;
     int lsb;
     for (int i = 0; i < edgePixels2.size(); i++) {
         tmp = image.get_data()[edgePixels2[i].first][edgePixels2[i].second] ;
-        lsb = tmp & 1 ;
+        lsb = tmp%2 ;
         message += std::to_string(lsb) ;
     }
     int size3 = message.size() ;
     if (size3% 7 != 0) {
-        message += std::string(7-(size3 % 7), '0') ;
+        message = std::string(7-(size3 % 7), '0') + message;
     }
     int size2 = message.size() ;
 
