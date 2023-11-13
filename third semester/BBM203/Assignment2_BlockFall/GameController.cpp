@@ -233,7 +233,7 @@ bool GameController::play(BlockFall& game, const string& commands_file){
     fstream file(commands_file);
     string line;
     bool first = true;
-    while (getline(file, line) && game.gameOver == 0) {
+    while (game.gameOver == 0 && getline(file, line) ) {
 
         line = line.substr(0,line.size()-1);
 
