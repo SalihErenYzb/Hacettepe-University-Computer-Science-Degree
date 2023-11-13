@@ -299,7 +299,7 @@ bool GameController::play(BlockFall& game, const string& commands_file){
                     goToMidX(2*x1[0].size(),2);
 
                 for (int j = 0; j < x1[i].size(); j++) {
-                    if (game.grid[i][j] == 1 ) {
+                    if (x1[i][j] == 1 ) {
                         cout << occupiedCellChar;
                     } else {
                         cout << unoccupiedCellChar;
