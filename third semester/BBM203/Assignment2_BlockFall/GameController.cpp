@@ -333,8 +333,12 @@ void GameController::print_grid_dull(BlockFall& game,bool isShape){
 }
 void GameController::print_grid(BlockFall& game){
     cout << "Score: " << game.current_score << endl;
-    int high = max(game.current_score, game.leaderboard.head_leaderboard_entry->score);
-    cout << "Highest Score: " << high << endl;
+    if (game.leaderboard.head_leaderboard_entry != nullptr) {
+        int high = max(game.current_score, game.leaderboard.head_leaderboard_entry->score);
+        cout << "Highest Score: " << high << endl;
+    }else{
+        cout << "Highest Score: " << game.current_score << endl;
+    }
     if (game.active_rotation == nullptr || checkIfCollision(game.y, game) || game.gameOver  !=0 ) {
         print_grid_dull(game,false);
     }else {
