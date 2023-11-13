@@ -247,7 +247,7 @@ bool GameController::play(BlockFall& game, const string& commands_file){
     fstream file(commands_file);
     string line;
     bool first = true;
-    while (cin >> line && game.gameOver == 0) {
+    while (game.gameOver == 0 && cin >> line  ) {
 
         std::cout << "\033[2J\033[1;1H";
 
@@ -273,8 +273,12 @@ bool GameController::play(BlockFall& game, const string& commands_file){
         }
         
 
+        if (checkIfCollision(game.y, game)) {
+            game.gameOver = 2;
+        }else{
 
-        print_grid(game);
+            print_grid(game);
+        }
 
 
     }
