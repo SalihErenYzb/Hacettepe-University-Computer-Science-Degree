@@ -8,6 +8,9 @@ using namespace std;
 
 
 int main(){
-    cout << "hiii\b\bnaber" << endl;
+    int a;
+    while (cin >> a){
+        cout << a << endl;
+    }
 
 }

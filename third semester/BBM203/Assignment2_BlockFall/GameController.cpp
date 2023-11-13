@@ -1,5 +1,8 @@
 #include "GameController.h"
 #include <ctime>
+#include <chrono>
+#include <thread>
+
 bool GameController::checkIfCollision(int y,BlockFall& game){
     vector<vector<bool>> x = game.active_rotation->shape;
     if (y+x[0].size() > game.grid[0].size() || y < 0) {
@@ -165,6 +168,11 @@ bool GameController::checkIfRowIsFull(BlockFall& game, int row){
 void GameController::power_up(BlockFall& game){
     cout << "Before clearing:" << endl;
     print_grid_dull(game,false);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1200));
+    std::cout << "\033[2J\033[1;1H";
+
+
+    print_grid(game);
     int sum = clear(game);
     game.current_score += sum+1000;
 }
@@ -206,7 +214,11 @@ void GameController::drop(BlockFall& game){
         if (checkIfRowIsFull(game, i)) {
             if (isClear){
                 cout << "Before clearing:" << endl;
+        
                 print_grid_dull(game,false);
+                std::this_thread::sleep_for(std::chrono::milliseconds(1200));
+                std::cout << "\033[2J\033[1;1H";
+
                 isClear = false;
             }
 
@@ -225,6 +237,8 @@ void GameController::drop(BlockFall& game){
     }
 }
 bool GameController::play(BlockFall& game, const string& commands_file){
+        std::cout << "\033[2J\033[1;1H";
+        print_grid(game);
 
 
     // TODO: Implement the gameplay here while reading the commands from the input file given as the 3rd command-line
@@ -233,64 +247,67 @@ bool GameController::play(BlockFall& game, const string& commands_file){
     fstream file(commands_file);
     string line;
     bool first = true;
-    while (getline(file, line) && game.gameOver == 0) {
+    while (cin >> line && game.gameOver == 0) {
 
-        line = line.substr(0,line.size()-1);
+        std::cout << "\033[2J\033[1;1H";
 
-        if (line == "ROTATE_RIGHT") {
+        if (line == "RR") {
             rotate_Right(game);
-        } else if (line == "ROTATE_LEFT") {
+        } else if (line == "RL") {
             rotate_Left(game);
-        } else if (line == "MOVE_LEFT") {
+        } else if (line == "L") {
             move_Left(game);
-        } else if (line == "MOVE_RIGHT") {
+        } else if (line == "R") {
             move_Right(game);
-        } else if (line == "DROP") {
+        } else if (line == "D") {
             drop(game);
-        } else if (line == "POWER_UP") {
+        } else if (line == "P") {
             power_up(game);
-        } else if (line == "GRAVITY_SWITCH") {
+        } else if (line == "G") {
             gravitySwitch(game);
         }else if(line == "PRINT_GRID"){
-            if (first) {
-                first = false;
-            }else{
-                cout << endl;
-            }
 
-            print_grid(game);
         }
         else{
             cout << "Unknown command: " << line << endl;
         }
+        
+
+
+        print_grid(game);
+
 
     }
-    cout << endl;
+        cout << endl;
+        std::cout << "\033[2J\033[1;1H";
 
-    bool ans = false;
-    if (game.gameOver == 1) {
-        cout << "YOU WIN!\nNo more blocks.\nFinal grid and score:\n" << endl;
-        ans = true;
-    }else if (game.gameOver == 0){
-        game.gameOver = 3;
-        cout << "GAME FINISHED!\nNo more commands.\nFinal grid and score:\n" << endl;
-    }else{
-        cout << "GAME OVER!\nNext block that couldn't fit:" << endl;
-        vector<vector<bool>> x = game.active_rotation->shape;
-        for (int i = 0; i < x.size(); i++) {
-            for (int j = 0; j < x[i].size(); j++) {
-                if (x[i][j] == 1) {
-                    cout << occupiedCellChar;
-                }else{
-                    cout << unoccupiedCellChar;
+        bool ans = false;
+        if (game.gameOver == 1) {
+            cout << "YOU WIN!\nNo more blocks.\nFinal grid and score:\n" << endl;
+            ans = true;
+        }else if (game.gameOver == 0){
+            game.gameOver = 3;
+            cout << "GAME FINISHED!\nNo more commands.\nFinal grid and score:\n" << endl;
+        }else{
+            cout << "GAME OVER!\nNext block that couldn't fit:" << endl;
+            vector<vector<bool>> x = game.active_rotation->shape;
+            for (int i = 0; i < x.size(); i++) {
+                for (int j = 0; j < x[i].size(); j++) {
+                    if (x[i][j] == 1) {
+                        cout << occupiedCellChar;
+                    }else{
+                        cout << unoccupiedCellChar;
+                    }
                 }
+                cout << endl;
             }
-            cout << endl;
-        }
-        cout << "\nFinal grid and score:\n" << endl;
+            cout << "\nFinal grid and score:\n" << endl;
     }
     game.leaderboard.insert_new_entry(new LeaderboardEntry(game.current_score, std::time(nullptr), game.player_name));
     print_grid(game);
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    std::cout << "\033[2J\033[1;1H";
+
     game.leaderboard.print_leaderboard();
     game.leaderboard.write_to_file("leaderboard2.txt");
     return ans;
@@ -340,6 +357,9 @@ void GameController::print_grid(BlockFall& game){
     }else {
         print_grid_dull(game,true);
     }
+
+
+
 }
 
 
