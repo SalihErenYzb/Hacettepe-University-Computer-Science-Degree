@@ -9,7 +9,7 @@ using namespace std;
 class GameController {
 public:
     bool play(BlockFall &game, const string &commands_file); // Function that implements the gameplay
-    void print_grid(BlockFall &game); // Prints the grid
+    void print_grid(BlockFall &game,bool deneme=false); // Prints the grid
     void print_grid_dull(BlockFall &game,bool isShape); // Prints the grid without score and power-up
     void print_grid_dull(BlockFall &game); // Prints the grid without score and power-up
     void rotate_Right(BlockFall &game); // Rotates the active block to the right

@@ -166,13 +166,8 @@ bool GameController::checkIfRowIsFull(BlockFall& game, int row){
     return true;
 }
 void GameController::power_up(BlockFall& game){
-    cout << "Before clearing:" << endl;
-    print_grid_dull(game,false);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1200));
-    std::cout << "\033[2J\033[1;1H";
 
 
-    print_grid(game);
     int sum = clear(game);
     game.current_score += sum+1000;
 }
@@ -213,11 +208,7 @@ void GameController::drop(BlockFall& game){
     for (int i = 0; i < game.grid.size(); i++) {
         if (checkIfRowIsFull(game, i)) {
             if (isClear){
-                cout << "Before clearing:" << endl;
         
-                print_grid_dull(game,false);
-                std::this_thread::sleep_for(std::chrono::milliseconds(1200));
-                std::cout << "\033[2J\033[1;1H";
 
                 isClear = false;
             }
@@ -247,6 +238,8 @@ bool GameController::play(BlockFall& game, const string& commands_file){
     fstream file(commands_file);
     string line;
     bool first = true;
+    goToMidX();
+
     while (game.gameOver == 0 && cin >> line  ) {
 
         clearScreen();
@@ -268,7 +261,6 @@ bool GameController::play(BlockFall& game, const string& commands_file){
 
         }
         else{
-            cout << "Unknown command: " << line << endl;
         }
         
 
@@ -279,61 +271,109 @@ bool GameController::play(BlockFall& game, const string& commands_file){
             print_grid(game);
         }
 
+    goToMidX();
 
     }
-        cout << endl;
 
         clearScreen();
         bool ans = false;
         if (game.gameOver == 1) {
-            cout << "YOU WIN!\nNo more blocks.\nFinal grid and score:\n" << endl;
+            string ck1 = "YOU WIN!",ck2 ="No more blocks.",ck3="Final grid and score:";
+            printt(ck1,ck1.size(),true);
+            printt(ck2,ck2.size(),true);
+            printt(ck3,ck3.size(),true);
             ans = true;
         }else if (game.gameOver == 0){
             game.gameOver = 3;
-            cout << "GAME FINISHED!\nNo more commands.\nFinal grid and score:\n" << endl;
+            string ck1 = "GAME FINISHED!",ck2 ="No more commands.",ck3="Final grid and score:";
+            printt(ck1,ck1.size(),true);
+            printt(ck2,ck2.size(),true);
+            printt(ck3,ck3.size(),true);
         }else{
-            cout << "GAME OVER!\nNext block that couldn't fit:" << endl;
-            vector<vector<bool>> x = game.active_rotation->shape;
-            for (int i = 0; i < x.size(); i++) {
-                for (int j = 0; j < x[i].size(); j++) {
-                    if (x[i][j] == 1) {
+            string ck1 = "GAME OVER!",ck2 ="Next block that couldn't fit:",ck3="Final grid and score:";
+            printt(ck1,ck1.size(),true);
+            printt(ck2,ck2.size()-1,true);
+            vector<vector<bool>> x1= game.active_rotation->shape;
+
+            for (int i = 0; i < x1.size(); i++) {
+                    goToMidX(2*x1[0].size(),2);
+
+                for (int j = 0; j < x1[i].size(); j++) {
+                    if (game.grid[i][j] == 1 ) {
                         cout << occupiedCellChar;
-                    }else{
+                    } else {
                         cout << unoccupiedCellChar;
                     }
-                }
+                }  
                 cout << endl;
-            }
-            cout << "\nFinal grid and score:\n" << endl;
-    }
-    game.leaderboard.insert_new_entry(new LeaderboardEntry(game.current_score, std::time(nullptr), game.player_name));
-    print_grid(game);
-    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-    std::cout << "\033[2J\033[1;1H";
 
+
+            }
+            printt(ck3,ck3.size(),true);
+
+
+        }   
+
+    
+
+    game.leaderboard.insert_new_entry(new LeaderboardEntry(game.current_score, std::time(nullptr), game.player_name));
+    print_grid(game,true);
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    clearScreen();
     game.leaderboard.print_leaderboard();
     game.leaderboard.write_to_file("leaderboard2.txt");
     return ans;
 
 }
 void GameController::print_grid_dull(BlockFall& game){
+        goToMidX(2*game.cols+4,2);
+
+        for (int i = 0; i < game.cols+2; i++) {
+            cout << occupiedCellChar;
+
+
+        }
+        goToMidX(2*game.cols+4,2);
+
     for (int i = 0; i < game.rows; i++) {
+                    goToMidX(2*game.cols+4,2);
+        cout << occupiedCellChar;
         for (int j = 0; j < game.cols; j++) {
             if (game.grid[i][j] == 1 ) {
                 cout << occupiedCellChar;
             } else {
                 cout << unoccupiedCellChar;
             }
+        
+        }
+                cout << occupiedCellChar;
+            cout << endl;
+    }
+        goToMidX(2*game.cols+4,2);
+
+        for (int i = 0; i < game.cols+2; i++) {
+            cout << occupiedCellChar;
+
+
         }
         cout << endl;
-    }}
+    }
 void GameController::print_grid_dull(BlockFall& game,bool isShape){
     if (!isShape) {
        print_grid_dull(game);
     }else{
         vector<vector<bool>> x = game.active_rotation->shape;
+        goToMidX(2*game.cols+4,2);
 
+        for (int i = 0; i < game.cols+2; i++) {
+            cout << occupiedCellChar;
+
+
+        }
+        cout << endl;
         for (int i = 0; i < game.rows; i++) {
+                    goToMidX(2*game.cols+4,2);
+            cout << occupiedCellChar;
             for (int j = 0; j < game.cols; j++) {
                 int k = j -game.y;
                 int z = 0;
@@ -346,25 +386,47 @@ void GameController::print_grid_dull(BlockFall& game,bool isShape){
                     cout << unoccupiedCellChar;
                 }
             }
+            cout << occupiedCellChar;
             cout << endl;
         }
+            goToMidX(2*game.cols+4,2);
+
+        for (int i = 0; i < game.cols+2; i++) {
+            cout << occupiedCellChar;
+
+
+        }
+        cout << endl;
 }
-    cout << endl;
 }
-void GameController::print_grid(BlockFall& game){
-    goToMidY(game.rows+2,4);
-    std::string s = "Score: " + std::to_string(game.current_score);
-    printt(s,game.cols,true);
-    if (game.leaderboard.head_leaderboard_entry == nullptr) {
-        printt("Highest Score: 0",game.cols,true);
+void GameController::print_grid(BlockFall& game,bool deneme){
+    if (deneme){
+        cout << endl;
     }else{
+        goToMidY(game.rows+2,4);
+    }
+    std::string s = "Score: " + std::to_string(game.current_score);
+
+    printt(s,2*game.cols+4,true);
+
+    if (game.leaderboard.head_leaderboard_entry == nullptr) {
+        int high = game.current_score;
+
+        std::string d = "Highest Score: " + std::to_string(high);
+        printt(d, 2*game.cols+4, true);
+    } else {
         int high = max(game.current_score, game.leaderboard.head_leaderboard_entry->score);
 
-        std::string d = "Highest Score: " + high;
-        printt(d,game.cols,true);
+        std::string d = "Highest Score: " + std::to_string(high);
+        printt(d, 2*game.cols+4, true);
     }
-
-
+    if (game.gravity_mode_on){
+        std::string d = "Gravity Mode: ON";
+        printt(d, 2*game.cols+4, true);
+    }else{
+        std::string d = "Gravity Mode: OFF";
+        printt(d, 2*game.cols+4, true);
+    }
     if (game.active_rotation == nullptr || checkIfCollision(game.y, game) || game.gameOver  !=0 ) {
         print_grid_dull(game,false);
     }else {

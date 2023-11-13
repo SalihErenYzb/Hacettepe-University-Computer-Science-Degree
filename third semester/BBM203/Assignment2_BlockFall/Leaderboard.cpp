@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "cmdlib.h"
 using namespace std;
 
 void Leaderboard::insert_new_entry(LeaderboardEntry * new_entry) {
@@ -87,15 +88,16 @@ void Leaderboard::read_from_file(const string& filename) {
 
 
 void Leaderboard::print_leaderboard() {
-    cout << "Leaderboard" << endl;
-    cout << "-----------" << endl;
+    printt("Leaderboard",11,true);
+    printt("-----------",11,true);
     LeaderboardEntry *curr = head_leaderboard_entry;
     int i = 1;
     while (curr != nullptr) {
         std::tm* timeinfo = std::localtime(&curr->last_played);
         char buffer[80];
         std::strftime(buffer, sizeof(buffer), "%H:%M:%S/%d.%m.%Y", timeinfo);
-        cout << i << ". " << curr->player_name << " " << curr->score << " " << buffer << endl;
+        std::string ck = std::to_string(i) + ". " + curr->player_name + " " + std::to_string(curr->score) + " " + buffer;
+        printt(ck,ck.size(),true);
         curr = curr->next_leaderboard_entry;
         i++;
     }
