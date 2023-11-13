@@ -2,44 +2,36 @@
 #include "GameController.h"
 #include <iostream>
 #include <iomanip>
-#include <sys/ioctl.h>
-#include <unistd.h>
-void print(string text,int pad,bool endline = false){
-    struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-
-    int padding = (w.ws_col - pad) / 2;
-
-    std::cout << std::string(padding, ' ') << text ;
-    if (endline){
-        cout << endl;
-    }
-
-}
+#include "cmdlib.h"
 void centerText() {
 
-
-    std::string text =R"(
-▀█████████▄   ▄█        ▄██████▄   ▄████████    ▄█   ▄█▄    ▄████████    ▄████████  ▄█        ▄█       
-  ███    ███ ███       ███    ███ ███    ███   ███ ▄███▀   ███    ███   ███    ███ ███       ███       
-  ███    ███ ███       ███    ███ ███    █▀    ███▐██▀     ███    █▀    ███    ███ ███       ███       
- ▄███▄▄▄██▀  ███       ███    ███ ███         ▄█████▀     ▄███▄▄▄       ███    ███ ███       ███       
-▀▀███▀▀▀██▄  ███       ███    ███ ███        ▀▀█████▄    ▀▀███▀▀▀     ▀███████████ ███       ███       
-  ███    ██▄ ███       ███    ███ ███    █▄    ███▐██▄     ███          ███    ███ ███       ███       
-  ███    ███ ███▌    ▄ ███    ███ ███    ███   ███ ▀███▄   ███          ███    ███ ███▌    ▄ ███▌    ▄ 
-▄█████████▀  █████▄▄██  ▀██████▀  ████████▀    ███   ▀█▀   ███          ███    █▀  █████▄▄██ █████▄▄██ 
-             ▀                                 ▀                                   ▀         ▀         
-)"; // The text to be centered
-
-    struct winsize w;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-
-    print(text,text.size());
+    std::string string1 = "▀█████████▄   ▄█        ▄██████▄   ▄████████    ▄█   ▄█▄    ▄████████    ▄████████  ▄█        ▄█";
+    std::string string2 = "  ███    ███ ███       ███    ███ ███    ███   ███ ▄███▀   ███    ███   ███    ███ ███       ███";
+    std::string string3 = "  ███    ███ ███       ███    ███ ███    █▀    ███▐██▀     ███    █▀    ███    ███ ███       ███";
+    std::string string4 = " ▄███▄▄▄██▀  ███       ███    ███ ███         ▄█████▀     ▄███▄▄▄       ███    ███ ███       ███";
+    std::string string5 = "▀▀███▀▀▀██▄  ███       ███    ███ ███        ▀▀█████▄    ▀▀███▀▀▀     ▀███████████ ███       ███";
+    std::string string6 = "  ███    ██▄ ███       ███    ███ ███    █▄    ███▐██▄     ███          ███    ███ ███       ███";
+    std::string string7 = "  ███    ███ ███▌    ▄ ███    ███ ███    ███   ███ ▀███▄   ███          ███    ███ ███▌    ▄ ███▌    ▄";
+    std::string string8 = " ▄█████████▀ █████▄▄██  ▀██████▀  ████████▀    ███   ▀█▀   ███          ███    █▀  █████▄▄██ █████▄▄██";
+    std::string string9 = " ▀                                 ▀                                   ▀         ▀"; // The text to be centered
+    int tmp = 93;
+    printn(10);
+    printt(string1,tmp,true);
+        printt(string2,tmp,true);
+    printt(string3,tmp,true);
+    printt(string4,tmp,true);
+    printt(string5,tmp,true);
+    printt(string6,tmp,true);
+    printt(string7,tmp,true);
+    printt(string8,tmp,true);
+    printt(string9,tmp,true);
+    
 
     cout << endl;
     cout << endl;
-    print("Welcome to BlockFall!",21,true);
-    print("Type Start to begin the game!",29,true);
+    printt("Welcome to BlockFall!",21,true);
+    printt("Type Start to begin the game!",29,true);
+    goToMidX(5);
 }
 
 int main(int argc, char **argv) {

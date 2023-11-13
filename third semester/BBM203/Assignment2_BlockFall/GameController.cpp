@@ -2,7 +2,7 @@
 #include <ctime>
 #include <chrono>
 #include <thread>
-
+#include "cmdlib.h"
 bool GameController::checkIfCollision(int y,BlockFall& game){
     vector<vector<bool>> x = game.active_rotation->shape;
     if (y+x[0].size() > game.grid[0].size() || y < 0) {
@@ -237,7 +237,7 @@ void GameController::drop(BlockFall& game){
     }
 }
 bool GameController::play(BlockFall& game, const string& commands_file){
-        std::cout << "\033[2J\033[1;1H";
+        clearScreen();
         print_grid(game);
 
 
@@ -249,8 +249,7 @@ bool GameController::play(BlockFall& game, const string& commands_file){
     bool first = true;
     while (game.gameOver == 0 && cin >> line  ) {
 
-        std::cout << "\033[2J\033[1;1H";
-
+        clearScreen();
         if (line == "RR") {
             rotate_Right(game);
         } else if (line == "RL") {
@@ -283,8 +282,8 @@ bool GameController::play(BlockFall& game, const string& commands_file){
 
     }
         cout << endl;
-        std::cout << "\033[2J\033[1;1H";
 
+        clearScreen();
         bool ans = false;
         if (game.gameOver == 1) {
             cout << "YOU WIN!\nNo more blocks.\nFinal grid and score:\n" << endl;
@@ -353,9 +352,19 @@ void GameController::print_grid_dull(BlockFall& game,bool isShape){
     cout << endl;
 }
 void GameController::print_grid(BlockFall& game){
-    cout << "Score: " << game.current_score << endl;
-    int high = max(game.current_score, game.leaderboard.head_leaderboard_entry->score);
-    cout << "Highest Score: " << high << endl;
+    goToMidY(game.rows+2,4);
+    std::string s = "Score: " + std::to_string(game.current_score);
+    printt(s,game.cols,true);
+    if (game.leaderboard.head_leaderboard_entry == nullptr) {
+        printt("Highest Score: 0",game.cols,true);
+    }else{
+        int high = max(game.current_score, game.leaderboard.head_leaderboard_entry->score);
+
+        std::string d = "Highest Score: " + high;
+        printt(d,game.cols,true);
+    }
+
+
     if (game.active_rotation == nullptr || checkIfCollision(game.y, game) || game.gameOver  !=0 ) {
         print_grid_dull(game,false);
     }else {
