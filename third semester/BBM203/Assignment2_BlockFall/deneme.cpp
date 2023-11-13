@@ -1,16 +1,15 @@
 #include <iostream>
-#include <ctime>
-#include "BlockFall.h"
-#include <fstream>
-#include <sstream>
-#include "GameController.h"
-using namespace std;
+#include <sys/ioctl.h>
+#include <unistd.h>
 
+int main() {
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-int main(){
-    int a;
-    while (cin >> a){
-        cout << a << endl;
-    }
+    std::string text = "Middle Text";
+    int padding = (w.ws_col - text.length()) / 2;
 
+    std::cout << std::string(padding, ' ') << text << std::endl;
+
+    return 0;
 }

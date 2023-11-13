@@ -2,7 +2,20 @@
 #include "GameController.h"
 #include <iostream>
 #include <iomanip>
+#include <sys/ioctl.h>
+#include <unistd.h>
+void print(string text,int pad,bool endline = false){
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
+    int padding = (w.ws_col - pad) / 2;
+
+    std::cout << std::string(padding, ' ') << text ;
+    if (endline){
+        cout << endl;
+    }
+
+}
 void centerText() {
 
 
@@ -18,12 +31,15 @@ void centerText() {
              ▀                                 ▀                                   ▀         ▀         
 )"; // The text to be centered
 
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-    std::cout  << text << std::endl;
+    print(text,text.size());
+
     cout << endl;
     cout << endl;
-    cout << "Welcome to BlockFall!" << endl;
-    cout << "Type Start to begin the game!" << endl;
+    print("Welcome to BlockFall!",21,true);
+    print("Type Start to begin the game!",29,true);
 }
 
 int main(int argc, char **argv) {
