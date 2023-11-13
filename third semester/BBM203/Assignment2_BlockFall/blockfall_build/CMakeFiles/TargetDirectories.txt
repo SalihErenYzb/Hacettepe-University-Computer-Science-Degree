@@ -1,0 +1,3 @@
+/mnt/c/Users/Salih/Desktop/salih/üni/Hacettepe-University-Computer-Science-Degree/third semester/BBM203/Assignment2_BlockFall/blockfall_build/CMakeFiles/blockfall.dir
+/mnt/c/Users/Salih/Desktop/salih/üni/Hacettepe-University-Computer-Science-Degree/third semester/BBM203/Assignment2_BlockFall/blockfall_build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Salih/Desktop/salih/üni/Hacettepe-University-Computer-Science-Degree/third semester/BBM203/Assignment2_BlockFall/blockfall_build/CMakeFiles/rebuild_cache.dir

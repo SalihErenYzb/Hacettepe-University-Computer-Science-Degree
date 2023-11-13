@@ -1,11 +1,14 @@
 #ifndef BLOCKFALL_H
 #define BLOCKFALL_H
 
-#define occupiedCellChar "██"
-#define unoccupiedCellChar "▒▒"
+#define occupiedCellChar "⬜"
+#define unoccupiedCellChar "⬛"
 
 #include <vector>
 #include <string>
+//include for file operations
+#include <fstream>
+#include <sstream>
 
 #include "Block.h"
 #include "LeaderboardEntry.h"
@@ -19,7 +22,8 @@ public:
     BlockFall(string grid_file_name, string blocks_file_name, bool gravity_mode_on, const string &leaderboard_file_name,
               const string &player_name);
     virtual ~BlockFall();
-
+    int gameOver = 0;
+    int y;
     int rows;  // Number of rows in the grid
     int cols;  // Number of columns in the grid
     vector<vector<int> > grid;  // 2D game grid
@@ -31,7 +35,6 @@ public:
     string leaderboard_file_name; // Leaderboard file name, taken from the command-line argument 5 in main
     string player_name; // Player name, taken from the command-line argument 6 in main
     Leaderboard leaderboard;
-
     void initialize_grid(const string & input_file); // Initializes the grid using the command-line argument 1 in main
     void read_blocks(const string & input_file); // Reads the input file and calls the read_block() function for each block;
 };

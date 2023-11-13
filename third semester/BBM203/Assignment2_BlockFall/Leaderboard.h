@@ -11,12 +11,15 @@ using namespace std;
 
 class Leaderboard {
 public:
+    int size = 0;
     LeaderboardEntry* head_leaderboard_entry = nullptr;
     void read_from_file(const string &filename);
     void write_to_file(const string &filename);
     void print_leaderboard();
     void insert_new_entry(LeaderboardEntry *new_entry);
+    void delExtra();
     virtual ~Leaderboard();
+    
 };
 
 
