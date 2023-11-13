@@ -163,6 +163,10 @@ bool GameController::checkIfRowIsFull(BlockFall& game, int row){
     return true;
 }
 void GameController::power_up(BlockFall& game){
+    if (!first2){
+        cout << endl;
+    }
+    first2 = false;
     cout << "Before clearing:" << endl;
     print_grid_dull(game,false);
     int sum = clear(game);
@@ -205,6 +209,10 @@ void GameController::drop(BlockFall& game){
     for (int i = 0; i < game.grid.size(); i++) {
         if (checkIfRowIsFull(game, i)) {
             if (isClear){
+                if (!first2){
+                    cout  << endl;
+                }
+                first2 = false;
                 cout << "Before clearing:" << endl;
                 print_grid_dull(game,false);
                 isClear = false;
@@ -233,8 +241,8 @@ bool GameController::play(BlockFall& game, const string& commands_file){
     fstream file(commands_file);
     string line;
     bool first = true;
+    first2 = true;
     while (game.gameOver == 0 && getline(file, line) ) {
-
         line = line.substr(0,line.size()-1);
 
         if (line == "ROTATE_RIGHT") {
@@ -252,6 +260,7 @@ bool GameController::play(BlockFall& game, const string& commands_file){
         } else if (line == "GRAVITY_SWITCH") {
             gravitySwitch(game);
         }else if(line == "PRINT_GRID"){
+            first2 = false;
             if (first) {
                 first = false;
             }else{
@@ -292,7 +301,10 @@ bool GameController::play(BlockFall& game, const string& commands_file){
     game.leaderboard.insert_new_entry(new LeaderboardEntry(game.current_score, std::time(nullptr), game.player_name));
     print_grid(game);
     game.leaderboard.print_leaderboard();
-    game.leaderboard.write_to_file("leaderboard2.txt");
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    game.leaderboard.write_to_file("leaderboard.txt");
     return ans;
 
 }

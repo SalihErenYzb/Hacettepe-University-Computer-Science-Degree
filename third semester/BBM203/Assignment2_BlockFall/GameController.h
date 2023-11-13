@@ -8,6 +8,7 @@ using namespace std;
 
 class GameController {
 public:
+    bool first2 = true;
     bool play(BlockFall &game, const string &commands_file); // Function that implements the gameplay
     void print_grid(BlockFall &game); // Prints the grid
     void print_grid_dull(BlockFall &game,bool isShape); // Prints the grid without score and power-up
@@ -35,4 +36,4 @@ public:
 };
 
 
-#endif //PA2_GAMECONTROLLER_H
+#endif
