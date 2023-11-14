@@ -4,6 +4,9 @@
 #include <thread>
 #include "cmdlib.h"
 bool GameController::checkIfCollision(int y,BlockFall& game){
+    if (game.active_rotation == nullptr) {
+        return false;
+    }
     vector<vector<bool>> x = game.active_rotation->shape;
     if (y+x[0].size() > game.grid[0].size() || y < 0) {
         return true;
@@ -252,6 +255,7 @@ bool GameController::play(BlockFall& game, const string& commands_file){
         } else if (line == "R") {
             move_Right(game);
         } else if (line == "D") {
+            cout << "wtf";
             drop(game);
         } else if (line == "P") {
             power_up(game);
