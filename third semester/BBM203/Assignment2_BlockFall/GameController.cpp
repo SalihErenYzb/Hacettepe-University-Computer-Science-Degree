@@ -1,6 +1,9 @@
 #include "GameController.h"
 #include <ctime>
 bool GameController::checkIfCollision(int y,BlockFall& game){
+    if (game.active_rotation == nullptr) {
+        return false;
+    }
     vector<vector<bool>> x = game.active_rotation->shape;
     if (y+x[0].size() > game.grid[0].size() || y < 0) {
         return true;
