@@ -2,6 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <ctime>
+#include <iomanip>
+
 using namespace std;
 
 void Leaderboard::insert_new_entry(LeaderboardEntry * new_entry) {
@@ -92,10 +95,16 @@ void Leaderboard::print_leaderboard() {
     LeaderboardEntry *curr = head_leaderboard_entry;
     int i = 1;
     while (curr != nullptr) {
-        std::tm* timeinfo = std::localtime(&curr->last_played);
-        char buffer[80];
-        std::strftime(buffer, sizeof(buffer), "%H:%M:%S/%d.%m.%Y", timeinfo);
-        cout << i << ". " << curr->player_name << " " << curr->score << " " << buffer << endl;
+    
+        // Convert time to struct tm
+        std::tm* timeInfo = std::localtime(&curr->last_played);
+
+        // Format the timestamp
+        std::stringstream ss;
+        ss << std::put_time(timeInfo, "%H:%M:%S/%d.%m.%Y");
+        std::string formattedTime = ss.str();
+
+        cout << i << ". " << curr->player_name << " " << curr->score << " " << formattedTime << endl;
         curr = curr->next_leaderboard_entry;
         i++;
     }

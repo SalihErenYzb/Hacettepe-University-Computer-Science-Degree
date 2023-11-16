@@ -23,6 +23,7 @@ bool GameController::checkIfCollision(int y,BlockFall& game){
     }
     return false;
 }
+
 void GameController::rotate_Right(BlockFall& game){
     game.active_rotation = game.active_rotation->right_rotation;
     if (checkIfCollision(game.y, game)) {
@@ -166,9 +167,7 @@ bool GameController::checkIfRowIsFull(BlockFall& game, int row){
     return true;
 }
 void GameController::power_up(BlockFall& game){
-    if (!first2){
-        cout << endl;
-    }
+
     first2 = false;
     cout << "Before clearing:" << endl;
     print_grid_dull(game,false);
@@ -205,17 +204,19 @@ void GameController::drop(BlockFall& game){
     }else{
         game.current_score += dropForNormal(game);
     }
+
+
+
     if (powerDetection(game)) {
         power_up(game);
     }
+
+
     bool isClear = true;
     for (int i = 0; i < game.grid.size(); i++) {
         if (checkIfRowIsFull(game, i)) {
             if (isClear){
-                if (!first2){
-                    cout  << endl;
-                }
-                first2 = false;
+
                 cout << "Before clearing:" << endl;
                 print_grid_dull(game,false);
                 isClear = false;
@@ -226,27 +227,42 @@ void GameController::drop(BlockFall& game){
     }
     game.active_rotation = game.active_rotation->next_block;
     game.y = 0;
+
     if (game.active_rotation == nullptr) {
         game.gameOver = 1;
-        return;
     }
-    if (checkIfCollision(game.y, game)) {
+    if ( checkIfCollision( game.y,game)) {
         game.gameOver = 2;
-        return;
-    }
+    } 
+    //test 1
+    //if ( checkIfCollision( game.y,game)) {
+    //    game.gameOver = 2;
+    //}   works 
+
+    //test 2
+
+
+
 }
 bool GameController::play(BlockFall& game, const string& commands_file){
-
+    game.gameOver = 0;
 
     // TODO: Implement the gameplay here while reading the commands from the input file given as the 3rd command-line
     //       argument. The return value represents if the gameplay was successful or not: false if game over,
     //       true otherwise.
     fstream file(commands_file);
     string line;
-    bool first = true;
-    first2 = true;
+    if (game.active_rotation == nullptr) {
+        game.gameOver = 1;
+    }
+    if ( checkIfCollision( game.y,game)) {
+        game.gameOver = 2;
+
+    }   
     while (game.gameOver == 0 && getline(file, line) ) {
-        line = line.substr(0,line.size()-1);
+
+        //line = line.substr(0, line.size()-1);
+
 
         if (line == "ROTATE_RIGHT") {
             rotate_Right(game);
@@ -258,17 +274,11 @@ bool GameController::play(BlockFall& game, const string& commands_file){
             move_Right(game);
         } else if (line == "DROP") {
             drop(game);
-        } else if (line == "POWER_UP") {
-            power_up(game);
+        } else if (line == "") {
+           break;
         } else if (line == "GRAVITY_SWITCH") {
             gravitySwitch(game);
         }else if(line == "PRINT_GRID"){
-            first2 = false;
-            if (first) {
-                first = false;
-            }else{
-                cout << endl;
-            }
 
             print_grid(game);
         }
@@ -276,17 +286,25 @@ bool GameController::play(BlockFall& game, const string& commands_file){
             cout << "Unknown command: " << line << endl;
         }
 
+        if (game.active_rotation == nullptr) {
+            game.gameOver = 1;
+        }
+        if ( checkIfCollision( game.y,game)) {
+            game.gameOver = 2;
+        } 
     }
-    cout << endl;
 
     bool ans = false;
-    if (game.gameOver == 1) {
+
+
+    if
+     (game.gameOver == 1) {
         cout << "YOU WIN!\nNo more blocks.\nFinal grid and score:\n" << endl;
         ans = true;
     }else if (game.gameOver == 0){
-        game.gameOver = 3;
         cout << "GAME FINISHED!\nNo more commands.\nFinal grid and score:\n" << endl;
-    }else{
+        ans = true;
+    }else if (game.gameOver == 2){
         cout << "GAME OVER!\nNext block that couldn't fit:" << endl;
         vector<vector<bool>> x = game.active_rotation->shape;
         for (int i = 0; i < x.size(); i++) {
@@ -302,12 +320,20 @@ bool GameController::play(BlockFall& game, const string& commands_file){
         cout << "\nFinal grid and score:\n" << endl;
     }
     game.leaderboard.insert_new_entry(new LeaderboardEntry(game.current_score, std::time(nullptr), game.player_name));
-    print_grid(game);
+    cout << "Score: " << game.current_score << endl;
+    if (game.leaderboard.head_leaderboard_entry != nullptr) {
+        int high = max(game.current_score, game.leaderboard.head_leaderboard_entry->score);
+        cout << "High Score: " << high << endl;
+    }else{
+        cout << "High Score: " << game.current_score << endl;
+    }
+    print_grid_dull(game);
+    cout << endl;
     game.leaderboard.print_leaderboard();
     cout << endl;
     cout << endl;
     cout << endl;
-    game.leaderboard.write_to_file("leaderboard.txt");
+    game.leaderboard.write_to_file(game.leaderboard_file_name);
     return ans;
 
 }
@@ -321,7 +347,8 @@ void GameController::print_grid_dull(BlockFall& game){
             }
         }
         cout << endl;
-    }}
+    }
+    }
 void GameController::print_grid_dull(BlockFall& game,bool isShape){
     if (!isShape) {
        print_grid_dull(game);
@@ -345,20 +372,24 @@ void GameController::print_grid_dull(BlockFall& game,bool isShape){
         }
 }
     cout << endl;
+    cout << endl;
+
+
 }
 void GameController::print_grid(BlockFall& game){
     cout << "Score: " << game.current_score << endl;
     if (game.leaderboard.head_leaderboard_entry != nullptr) {
         int high = max(game.current_score, game.leaderboard.head_leaderboard_entry->score);
-        cout << "Highest Score: " << high << endl;
+        cout << "High Score: " << high << endl;
     }else{
-        cout << "Highest Score: " << game.current_score << endl;
+        cout << "High Score: " << game.current_score << endl;
     }
     if (game.active_rotation == nullptr || checkIfCollision(game.y, game) || game.gameOver  !=0 ) {
         print_grid_dull(game,false);
     }else {
         print_grid_dull(game,true);
     }
+
 }
 
 

@@ -17,13 +17,14 @@ void BlockFall::read_blocks(const string &input_file) {
     Block* curr = new Block;
     Block * before ;
     std::vector<bool> lineData;
+    bool isFile = false;
 
     if (inputFile.is_open()) {
 
         char tmp;
         while (inputFile >> tmp){
             if (tmp == '['){
-
+                isFile = true;
                 if (initial_block == nullptr){
                     initial_block = curr;
                 }else{
@@ -40,16 +41,13 @@ void BlockFall::read_blocks(const string &input_file) {
                     std::getline(inputFile, line);
                     std::istringstream iss(line);
                     std::string search = "]";
-
                     size_t found = line.find(search);
                     if (found != std::string::npos) {
                             continueReading = false;
 
                     }
-
                     char num;
                     while (iss >> num) {
-                        
                         if (num == '1'){
                             lineData.push_back(true);
                         }else if (num == '0'){
@@ -59,6 +57,7 @@ void BlockFall::read_blocks(const string &input_file) {
                         }
                     }
                     curr->shape.push_back(lineData);
+
                     lineData.clear();
 
                 }
@@ -73,17 +72,29 @@ void BlockFall::read_blocks(const string &input_file) {
         std::cout << "Failed to open the file." << std::endl;
 
     }
+    if (!isFile){
+        delete curr;
+        return;
+    }
     delete curr->next_block;
+    if (initial_block==curr){
+        initial_block = nullptr;
+    }
     for (int i = 0 ; i < 4 ; i++){
         curr->next_block = nullptr;
         curr = curr->left_rotation;
-        before->next_block = nullptr;
-        before = before->left_rotation;
+        if (before != nullptr){
+            before->next_block = nullptr;
+            before = before->left_rotation;      
+      }
+
     }
     power_up = curr->shape;
     //delete all rotations of the last block
-    active_rotation = initial_block;
+    if (initial_block!= nullptr){
+        active_rotation = initial_block;
 
+    }
     curr->left_rotation->right_rotation = nullptr;
     curr->left_rotation = nullptr;
     while (curr != nullptr){

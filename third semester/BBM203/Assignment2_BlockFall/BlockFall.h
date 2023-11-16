@@ -1,8 +1,9 @@
 #ifndef BLOCKFALL_H
 #define BLOCKFALL_H
-
-#define occupiedCellChar "██"
+#define occupiedCellChar  "██"
 #define unoccupiedCellChar "▒▒"
+//#define occupiedCellChar "⬜"//"██"
+//#define unoccupiedCellChar "⬛"//"▒▒"
 
 #include <vector>
 #include <string>
