@@ -11,7 +11,6 @@ public:
     PhysicalLayerPacket(int layerID, const string& senderMAC, const string& receiverMAC);
     ~PhysicalLayerPacket() override;
     int nofhops = 0;
-    bool tolog = true;
     string sender_MAC_address;
     string receiver_MAC_address;
 
