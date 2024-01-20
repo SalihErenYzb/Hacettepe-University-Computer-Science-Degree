@@ -179,7 +179,7 @@ void SpaceSectorBST::printStellarPath(const std::vector<Sector*>& path) {
     // to STDOUT in the given format.
     //The stellar path to Dr. Elara: 0SSS->37RUF->25RUS->45RDF
     if (path.size() == 0){
-        cout << "A path to Dr. Elara could not be found." << endl << endl;
+        cout << "A path to Dr. Elara could not be found." << endl;
         return;
     }
     cout << "The stellar path to Dr. Elara: ";

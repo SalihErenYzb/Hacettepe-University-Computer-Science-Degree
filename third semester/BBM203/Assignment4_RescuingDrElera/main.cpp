@@ -19,6 +19,7 @@ int main(int argc, char**argv) {
     sector_map_BST.displaySectorsInOrder();
     sector_map_BST.displaySectorsPreOrder();
     sector_map_BST.displaySectorsPostOrder();
+
     std::vector<Sector*> stellar_path = sector_map_BST.getStellarPath("45RDF");
     sector_map_BST.printStellarPath(stellar_path);
 
@@ -35,12 +36,12 @@ int main(int argc, char**argv) {
     sector_map_LLRBT.displaySectorsPreOrder();
     sector_map_LLRBT.displaySectorsPostOrder();
 
-    std::vector<Sector*> stellar_path_2 = sector_map_LLRBT.getStellarPath("31SUF");
+    std::vector<Sector*> stellar_path_2 = sector_map_LLRBT.getStellarPath("45RDF");
     sector_map_LLRBT.printStellarPath(stellar_path_2);
 
     cout << endl;
 
-    stellar_path_2 = sector_map_LLRBT.getStellarPath("45RDF");
+    stellar_path_2 = sector_map_LLRBT.getStellarPath("31SUF");
     sector_map_LLRBT.printStellarPath(stellar_path_2);
 
     cout << endl;
