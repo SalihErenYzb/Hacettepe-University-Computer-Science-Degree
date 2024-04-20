@@ -1,1 +1,1 @@
-![Alt Text](image_path)
+[![Video Title](https://github.com/SalihErenYzb/Hacettepe-University-Computer-Science-Degree/blob/main/second%20semester/BBM104/DuckHunt/GamePlay/DuckHunt.png)](https://github.com/SalihErenYzb/Hacettepe-University-Computer-Science-Degree/blob/main/second%20semester/BBM104/DuckHunt/GamePlay/DuckHunt.mp4)
