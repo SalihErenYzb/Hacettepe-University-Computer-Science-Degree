@@ -1,4 +1,4 @@
-BlockFall is a game I created as the second assignment of third semester of Hacettepe University. Assignment was meant to teach us linked lists, circular linked lists and usage of dynamic memory. All blocks are read from a file and turned into linked list of circular linked lists where a circular linked list represents different rotations of a particular piece.
+BlockFall is a game I created as the second assignment of third semester of Hacettepe University. Assignment was meant to teach us linked lists, circular linked lists and usage of dynamic memory using C++. All blocks are read from a file and turned into linked list of circular linked lists where a circular linked list represents different rotations of a particular piece.
 
 3 students who got 100 from auto-grader and turned the game to playable game and uploaded to youtube were rewarded a real tetris console. I was lucky enough to be one of them. 
 
