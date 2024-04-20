@@ -1,1 +1,3 @@
-[![Video Title](https://github.com/SalihErenYzb/Hacettepe-University-Computer-Science-Degree/blob/main/second%20semester/BBM104/DuckHunt/GamePlay/DuckHunt.png)](https://github.com/SalihErenYzb/Hacettepe-University-Computer-Science-Degree/blob/main/second%20semester/BBM104/DuckHunt/GamePlay/DuckHunt.mp4)
+DuckHunt is a game that I created using Java and JavaFX as the last assignment of second assignment in Hacettepe University.
+
+![DuckHunt GamePlay](https://github.com/SalihErenYzb/Hacettepe-University-Computer-Science-Degree/blob/main/second%20semester/BBM104/DuckHunt/GamePlay/DuckHunt.gif)
