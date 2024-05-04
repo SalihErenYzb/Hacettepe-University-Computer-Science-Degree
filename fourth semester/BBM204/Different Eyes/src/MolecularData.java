@@ -65,23 +65,16 @@ public class MolecularData {
     // Returns a list of molecular structures unique to the targetStructure only
     public static ArrayList<MolecularStructure> getVitalesAnomaly(List<MolecularStructure> sourceStructures, List<MolecularStructure> targeStructures) {
         ArrayList<MolecularStructure> anomalyList = new ArrayList<>();
-        
-
-
         // Iterate through target structures and add unique structures to the anomaly list
         for (MolecularStructure targetStructure : targeStructures) {
-            boolean isAnomaly = true;
+            anomalyList.add(new MolecularStructure(targetStructure));
             for (MolecularStructure sourceStructure : sourceStructures) {
                 if (sourceStructure.equals(targetStructure)) {
-                    isAnomaly = false;
+                    anomalyList.remove(anomalyList.size() - 1);
                     break;
                 }
             }
-            if (isAnomaly) {
-                anomalyList.add(new MolecularStructure(targetStructure));
-            }
         }
-
         return anomalyList;
     }
     // Method to print Vitales anomalies

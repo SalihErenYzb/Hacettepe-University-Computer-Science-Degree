@@ -8,9 +8,17 @@ public class Quiz3 {
         return parent[x] = find(parent[x]);
     }
     public static int union(int x, int y){
-        if(find(x) != find(y)) 
-            return parent[parent[x]] = y;
-        return 0;
+        x = find(x);
+        y = find(y);
+        if(x == y)return 0;
+        if(size[x] < size[y]){
+            parent[x] = y;
+            size[y] += size[x];
+        }else{
+            parent[y] = x;
+            size[x] += size[y];
+        }
+        return 1;
     }
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(new File(args[0]));
@@ -22,6 +30,7 @@ public class Quiz3 {
             for(int i=0; i<p; i++){
                 coords.add(new int[]{sc.nextInt(), sc.nextInt()});
                 parent[i] = i;
+                size[i] = 1;
                 for (int j = 0; j < i; j++) 
                     edges.add(new Object[]{j, i, Math.hypot(coords.get(i)[0] - coords.get(j)[0],
                          coords.get(i)[1] - coords.get(j)[1])});
