@@ -2,7 +2,8 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
 public class HyperloopTrainNetwork implements Serializable {
     static final long serialVersionUID = 11L;
     public double averageTrainSpeed;
@@ -28,8 +29,10 @@ public class HyperloopTrainNetwork implements Serializable {
      * @return the result as String
      */
     public String getStringVar(String varName, String fileContent) {
-        // TODO: Your code goes here
-        return "";
+        Pattern p = Pattern.compile("[\\t ]*" + varName + "[\\t ]*=[\\t ]*\"([^\"]+)\"");
+        Matcher m = p.matcher(fileContent);
+        m.find();
+        return m.group(1);
     }
 
     /**
@@ -39,8 +42,10 @@ public class HyperloopTrainNetwork implements Serializable {
      * @return the result as Double
      */
     public Double getDoubleVar(String varName, String fileContent) {
-        // TODO: Your code goes here
-        return 0.0;
+        Pattern p = Pattern.compile("[\\t ]*" + varName + "[\\t ]*=[\\t ]*([0-9]+(?:\\.[0-9]+)?)");
+        Matcher m = p.matcher(fileContent);
+        m.find();
+        return Double.parseDouble(m.group(1));
     }
 
     /**
@@ -50,7 +55,12 @@ public class HyperloopTrainNetwork implements Serializable {
      */
     public Point getPointVar(String varName, String fileContent) {
         Point p = new Point(0, 0);
-        // TODO: Your code goes here
+        // starting_point= (0, 0 )
+        Pattern pattern = Pattern.compile("[\\t ]*" + varName + "[\\t ]*=[\\t ]*\\([\\t ]*([0-9]+)[\\t ]*,[\\t ]*([0-9]+)[\\t ]*\\)");
+        Matcher matcher = pattern.matcher(fileContent);
+        matcher.find();
+        p.x = Integer.parseInt(matcher.group(1));
+        p.y = Integer.parseInt(matcher.group(2));
         return p;
     } 
 
@@ -61,8 +71,26 @@ public class HyperloopTrainNetwork implements Serializable {
      */
     public List<TrainLine> getTrainLines(String fileContent) {
         List<TrainLine> trainLines = new ArrayList<>();
+        Pattern trainLinePattern = Pattern.compile("train_line_name\\s*=\\s*\"([^\"]+)\"\\s*train_line_stations\\s*=([^\\n]*)");
+        Matcher matcher = trainLinePattern.matcher(fileContent);
+        
+        while (matcher.find()) {
+            int i = 1;
+            String trainLineName = matcher.group(1);
+            String stationsString = matcher.group(2);
+            List<Station> stations = new ArrayList<>();
+            Pattern stationPattern = Pattern.compile("\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*\\)");
+            Matcher stationMatcher = stationPattern.matcher(stationsString);
 
-        // TODO: Your code goes here
+            while (stationMatcher.find()) {
+                int x = Integer.parseInt(stationMatcher.group(1));
+                int y = Integer.parseInt(stationMatcher.group(2));
+                stations.add(new Station(new Point(x, y),trainLineName+" Line Station "+i));
+                i++;
+            }
+
+            trainLines.add(new TrainLine(trainLineName, stations));
+        }
 
         return trainLines;
     }
@@ -72,7 +100,33 @@ public class HyperloopTrainNetwork implements Serializable {
      */
     public void readInput(String filename) {
 
-        // TODO: Your code goes here
-
+        // turn the file to string
+        String fileContent = new String();
+        try {
+            fileContent = new String(Files.readAllBytes(Paths.get(filename)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        startPoint = new Station(getPointVar("starting_point", fileContent), "Starting Point");
+        destinationPoint = new Station(getPointVar("destination_point", fileContent), "Final Destination");
+        averageTrainSpeed = getDoubleVar("average_train_speed", fileContent)* 1000 / 60;
+        numTrainLines = getIntVar("num_train_lines", fileContent);
+        lines = getTrainLines(fileContent);
+    }
+    private void printAll(){
+        // print everything
+        printStation(startPoint);
+        printStation(destinationPoint);
+        System.out.println("Average Train Speed: " + averageTrainSpeed);
+        System.out.println("Number of Train Lines: " + numTrainLines);
+        for (TrainLine line : lines) {
+            System.out.println("Train Line Name: " + line.trainLineName);
+            for (Station station : line.trainLineStations) {
+                printStation(station);
+            }
+        }
+    }
+    private static void printStation(Station station) {
+        System.out.println("Station: " + station.description + " station coordinates: x: " + station.coordinates.x + " y: " + station.coordinates.y);
     }
 }
