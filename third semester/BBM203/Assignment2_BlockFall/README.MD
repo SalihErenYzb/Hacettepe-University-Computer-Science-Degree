@@ -2,7 +2,7 @@ BlockFall is a game I created as the second assignment of third semester of Hace
 
 First 3 students who got 100 from auto-grader and turned the game to playable game and uploaded to youtube were rewarded a real tetris console. I was lucky enough to be one of them. 
 
-Below gif showcases the gameplay, notably the game does not use any graphical engine and purely runs on command line, every time block moves/drops/rotates new scene is printed and command line is slided down to create the illusion of a game. I also created a small library to make scene creating easier and be able center the game.
+Below gif showcases the gameplay, notably the game does not use any graphical engine and purely runs on command line, every time block moves/drops/rotates new scene is printed and command line is slided down to create the illusion of a game. I also created a small library to make scene creating easier and be able center the game. Important to note that playable game is part of the inter2 branch not main.
 
 
 ![BlockFall GamePlay](https://github.com/SalihErenYzb/Hacettepe-University-Computer-Science-Degree/blob/main/third%20semester/BBM203/Assignment2_BlockFall/tetris2.gif)
