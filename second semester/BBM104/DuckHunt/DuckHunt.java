@@ -19,7 +19,7 @@ The updateCursor method also presents a challenge in scaling the crosshair curso
 **/
 public class DuckHunt extends Application {
 	public static final double SCALE =3;
-	public static final double VOLUME =0.025;
+	public static final double VOLUME =0.05;
 	public static Image[] Backgrounds = {new Image("assets/background/1.png"),new Image("assets/background/2.png"),
 			new Image("assets/background/3.png"),new Image("assets/background/4.png"),
 			new Image("assets/background/5.png"),new Image("assets/background/6.png")};

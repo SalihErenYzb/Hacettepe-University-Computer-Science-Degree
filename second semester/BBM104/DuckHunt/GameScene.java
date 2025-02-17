@@ -31,6 +31,15 @@ public class GameScene extends Scene {
 	    		vert.clear();
 	    		cross.add(new DuckCrossFlyPane("duck_blue/", true,
 	    				150*(Math.round(DuckHunt.SCALE)), false, 150*(Math.round(DuckHunt.SCALE))));
+	    		cross.add(new DuckCrossFlyPane("duck_blue/", true,
+	    				11*(Math.round(DuckHunt.SCALE)), false, 150*(Math.round(DuckHunt.SCALE))));	    		cross.add(new DuckCrossFlyPane("duck_blue/", true,
+	    				150*(Math.round(DuckHunt.SCALE)), false, 80*(Math.round(DuckHunt.SCALE))));	    		cross.add(new DuckCrossFlyPane("duck_blue/", true,
+	    				150*(Math.round(DuckHunt.SCALE)), false, 78*(Math.round(DuckHunt.SCALE))));	    		cross.add(new DuckCrossFlyPane("duck_blue/", true,
+	    				75*(Math.round(DuckHunt.SCALE)), false, 94*(Math.round(DuckHunt.SCALE))));	    		cross.add(new DuckCrossFlyPane("duck_blue/", true,
+	    				150*(Math.round(DuckHunt.SCALE)), false, 16*(Math.round(DuckHunt.SCALE))));	    		cross.add(new DuckCrossFlyPane("duck_blue/", true,
+	    				47*(Math.round(DuckHunt.SCALE)), false, 150*(Math.round(DuckHunt.SCALE))));	    		cross.add(new DuckCrossFlyPane("duck_blue/", true,
+	    				22*(Math.round(DuckHunt.SCALE)), false, 79*(Math.round(DuckHunt.SCALE))));	    		cross.add(new DuckCrossFlyPane("duck_blue/", true,
+	    				22*(Math.round(DuckHunt.SCALE)), false, 130*(Math.round(DuckHunt.SCALE))));
 	    		this.setRoot(new CustomLevelGroup(vert, cross, "level 2",GameStateManager.GameState.LEVEL3));
 	    	}else if (newState == GameStateManager.GameState.LEVEL3) {
 	    		
